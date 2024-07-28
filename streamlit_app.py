@@ -3,7 +3,12 @@ import pandas as pd
 import duckdb
 from pygwalker.api.streamlit import StreamlitRenderer
 
-st.title("🎈 My new app")
+# Adjust the width of the Streamlit page
+st.set_page_config(
+    page_title="Data Explorer",
+    layout="wide"
+)
+
 st.write(
     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
 )
@@ -19,11 +24,7 @@ def get_pyg_renderer() -> "StreamlitRenderer":
     # If you want to use feature of saving chart config, set `spec_io_mode="rw"`
     return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw")
 
-# Adjust the width of the Streamlit page
-st.set_page_config(
-    page_title="Data Explorer",
-    layout="wide"
-)
+
 
 
 col1, col2 = st.columns(2)
