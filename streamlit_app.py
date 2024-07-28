@@ -23,7 +23,7 @@ df = pd.read_sql_query(query, conn)
 
 def get_pyg_renderer() -> "StreamlitRenderer":
     # If you want to use feature of saving chart config, set `spec_io_mode="rw"`
-    return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw")
+    return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw",kernel_computation=True)
 
 
 # Three columns with different widths
