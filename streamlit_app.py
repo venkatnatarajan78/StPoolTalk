@@ -5,12 +5,13 @@ from pygwalker.api.streamlit import StreamlitRenderer
 
 # Adjust the width of the Streamlit page
 st.set_page_config(
-    page_title="Data Explorer",
+    page_title="MyPooltalk",
     layout="wide"
+    
 )
-
+st.header ("My Pool Talk!!")
 st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
+    "Loans securitized this month!"
 )
 
 
@@ -25,12 +26,6 @@ def get_pyg_renderer() -> "StreamlitRenderer":
     return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw")
 
 
-
-
-col1, col2 = st.columns(2)
-col1.write('Column 1')
-col2.write('Column 2')
-
 # Three columns with different widths
 col1, col2, col3 = st.columns([3,1,1])
 # col1 is wider
@@ -38,9 +33,13 @@ col1, col2, col3 = st.columns([3,1,1])
 # Using 'with' notation:
 with col1:
     st.write('This is column 1')
+with col2:
+    st.write('Today')
+with col3:
+    st.write('Tomorrow')
 
 # Insert containers separated into tabs:
-tab1, tab2, tab3 = st.tabs(["Details", "Collateral", "Allocation"])
+tab1, tab2, tab3 = st.tabs(["Details", "Analyze", "Something Else"])
 
 tab2.write("this is tab 2")
 
