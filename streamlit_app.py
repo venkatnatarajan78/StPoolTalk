@@ -37,10 +37,8 @@ with col1:
     df = pd.read_sql_query(query, conn)
 
 with col2:
-    column_list = st.multiselect (label='Customize columns to display', options=df.columns)
-    st.write(column_list)
+    column_list = st.multiselect (label='Customize columns to display', options=df.columns, placeholder='Select columns')
     no_of_cols = (len(column_list))
-    st.write(no_of_cols)    
     query_string = "Select "
     i=0
     while i < no_of_cols:
