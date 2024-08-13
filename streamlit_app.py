@@ -53,16 +53,16 @@ with col2:
 # Insert containers separated into tabs:
 tab1, tab2, tab3 = st.tabs(["Dataset", "Analyze", "Details"])
 
-tab2.write("To create a visual, drag and drop attributes in to X or Y axis.")
+#tab2.write("To create a visual, drag and drop attributes in to X or Y axis.")
 
 # You can also use "with" notation:
 with tab1:
    st.dataframe(df,  use_container_width=True, hide_index=True)
 
 with tab2:
-    renderer = get_pyg_renderer()
-    renderer.explorer()
-
+    #renderer = get_pyg_renderer()
+    #renderer.explorer()
+    st.write ("Under construction")
 with tab3:
     if ln_search:
         df1=df.T
