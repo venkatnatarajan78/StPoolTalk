@@ -15,13 +15,24 @@ st.write(
     "Loans securitized this month!"
 )
 
-conn=duckdb.connect(':memory:')
-query = "SELECT * FROM read_csv('data/illd.txt') limit 1000"
-df = pd.read_sql_query(query, conn)
+def extract_data(query_string, column_string, table, filters): 
+    conn=duckdb.connect(':memory:')
+    df = pd.read_sql_query(query_string + column_string + table + filters, conn)
+    st.text(query_string + column_string + table + filters)
+    return df
 
-def get_pyg_renderer() -> "StreamlitRenderer":
+#def get_pyg_renderer() -> "StreamlitRenderer":
     # If you want to use feature of saving chart config, set `spec_io_mode="rw"`
-    return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw", kernel_computation=True)
+ #   return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw", kernel_computation=True)
+
+select_string = "SELECT "
+column_string =  "\"" + "Loan Identifier" + "\""
+from_string = " FROM read_csv('data/illd.txt')"
+filter_string = " limit 100"
+
+df = extract_data(select_string, column_string, from_string, filter_string)
+
+#st.text(select_string + column_string + from_string + filter_string)
 
 
 # Three columns with different widths
@@ -32,23 +43,23 @@ col1, col2, col3 = st.columns([3,1,1])
 with col1:
     ln_search = st.text_input("Search: Loan Identifier")
     if ln_search:
-        query = "select * from read_csv('data/illd.txt') where " + "\"" + "Loan Identifier" + "\"" + "=" + "'" + ln_search +"'"
-        
-    df = pd.read_sql_query(query, conn)
+        filter_string =  " where " + "\"" + "Loan Identifier" + "\"" + "=" + "'" + ln_search +"'"
+        df = extract_data(select_string, column_string, from_string, filter_string) 
+   # df = pd.read_sql_query(query, conn)
 
 with col2:
     column_list = st.multiselect (label='Customize columns to display', options=df.columns, placeholder='Select columns')
     no_of_cols = (len(column_list))
-    query_string = "Select "
+    column_string = ""
     i=0
     while i < no_of_cols:
         if i == (no_of_cols-1):
-            query_string += "\"" + column_list[i] + "\" from read_csv('data/illd.txt')"
+            column_string += "\"" + column_list[i] + "\""
         else: 
-            query_string += "\"" + column_list[i] + "\", "
+            column_string += "\"" + column_list[i] + "\", "
         i+=1
-    if column_list:
-        df = pd.read_sql_query(query_string, conn)
+    #if column_list:
+    df = extract_data(select_string, column_string, from_string, filter_string)
 
 # Insert containers separated into tabs:
 tab1, tab2, tab3 = st.tabs(["Dataset", "Analyze", "Details"])
