@@ -15,21 +15,24 @@ st.header ("My Pool Talk!!")
 
 def extract_data(query_string, columns, table, filters): 
     conn=duckdb.connect(':memory:')
-    dfs = pd.read_sql_query(query_string + columns + table + filters, conn)
     #st.text(query_string + column_string + table + filters)
+    dfs = pd.read_sql(query_string + columns + table + filters, conn)
+    
     return dfs
 
 #def get_pyg_renderer() -> "StreamlitRenderer":
     # If you want to use feature of saving chart config, set `spec_io_mode="rw"`
  #   return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw", kernel_computation=True)
 
-select_string = "SELECT "
-column_string =  "*"
+select_string = "SELECT * "
+column_string =  ""
 #"\"" + "Loan Identifier" + "\""
 from_string = " FROM read_parquet('data/secu_core.parquet')"
 filter_string = " limit 100"
 
 df = extract_data(select_string, column_string, from_string, filter_string)
+
+print (df)
 
 #st.text(select_string + column_string + from_string + filter_string)
 
@@ -67,8 +70,8 @@ tab1, tab2, tab3 = st.tabs(["Dataset", "Collateral", "Details"])
 
 # You can also use "with" notation:
 with tab1:
-    #st.dataframe(df,  use_container_width=True, hide_index=True)
-    st.write("Test")
+    st.dataframe(df,  use_container_width=True, hide_index=True)
+    #st.write("Test")
 with tab2:
     #renderer = get_pyg_renderer()
     #renderer.explorer()
