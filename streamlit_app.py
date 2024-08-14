@@ -61,7 +61,7 @@ with col2:
             column_string += "\"" + column_list[i] + "\", "
         i+=1
     #if column_list:
-    df = extract_data(select_string, column_string, from_string, filter_string)
+    df = extract_data("Select ", column_string, from_string, filter_string)
 
 # Insert containers separated into tabs:
 tab1, tab2, tab3 = st.tabs(["Dataset", "Collateral", "Details"])
