@@ -12,6 +12,8 @@ st.set_page_config(
 )
 st.header ("My Pool Talk!!")
 
+st.write("Dataset is limited to Fannie Mae Securities issued in July 2024. ")
+
 
 def extract_data(query_string, columns, table, filters): 
     conn=duckdb.connect(':memory:')
@@ -84,7 +86,13 @@ with tab2:
         column_string =  "*"
         from_string = " FROM read_parquet('data/ln_dsc.parquet')"
         df_loans = extract_data(select_string, column_string, from_string, filter_string)
-        st.dataframe(df_loans, use_container_width=True,hide_index=True)
+        if df_loans.empty:
+            st.write ("Collateral not found! You must have selected a Mega security. Still working on getting the collateral for Mega's!!")
+        else:
+            st.dataframe(df_loans, use_container_width=True,hide_index=True)
+    else:
+        st.write ("Submit a CUSIP in search above!")
+            
 with tab3:
     if txt_search:
         select_string = "SELECT "
@@ -93,3 +101,5 @@ with tab3:
         df_sec = extract_data(select_string, column_string, from_string, filter_string)
         df1=df_sec.T
         st.dataframe(df1, use_container_width=True)
+    else:
+        st.write ("Submit a CUSIP in search above!")
