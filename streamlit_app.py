@@ -26,8 +26,9 @@ def extract_data(query_string, column_string, table, filters):
  #   return StreamlitRenderer(df, spec="./gw_config.json", spec_io_mode="rw", kernel_computation=True)
 
 select_string = "SELECT "
-column_string =  "\"" + "Loan Identifier" + "\""
-from_string = " FROM read_csv('data/illd.txt')"
+column_string =  "*"
+#"\"" + "Loan Identifier" + "\""
+from_string = " FROM read_parquet('data/secu_core.parquet')"
 filter_string = " limit 100"
 
 df = extract_data(select_string, column_string, from_string, filter_string)
@@ -41,9 +42,9 @@ col1, col2, col3 = st.columns([3,1,1])
 
 # Using 'with' notation:
 with col1:
-    ln_search = st.text_input("Search: Loan Identifier")
+    ln_search = st.text_input("Search: CUSIP ID")
     if ln_search:
-        filter_string =  " where " + "\"" + "Loan Identifier" + "\"" + "=" + "'" + ln_search +"'"
+        filter_string =  " where " + "\"" + "cusip" + "\"" + "=" + "'" + ln_search +"'"
         df = extract_data(select_string, column_string, from_string, filter_string) 
    # df = pd.read_sql_query(query, conn)
 
