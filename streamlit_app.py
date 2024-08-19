@@ -52,22 +52,23 @@ with col1:
    # df = pd.read_sql_query(query, conn)
 
 with col2:
-    column_list = st.multiselect (label='Customize columns to display', options=df.columns, placeholder='Select columns')
-    no_of_cols = (len(column_list))
-    if column_list:
-        select_string="Select "
-    else:
-        select_string = "Select * "
-    column_string = ""
-    i=0
-    while i < no_of_cols:
-        if i == (no_of_cols-1):
-            column_string += "\"" + column_list[i] + "\""
-        else: 
-            column_string += "\"" + column_list[i] + "\", "
-        i+=1
-    #if column_list:
-    df = extract_data(select_string, column_string, from_string, filter_string)
+    with st.expander ("Selected Columns"):
+        column_list = st.multiselect (label='Customize columns to display', options=df.columns, placeholder='Select columns')
+        no_of_cols = (len(column_list))
+        if column_list:
+            select_string="Select "
+        else:
+            select_string = "Select * "
+        column_string = ""
+        i=0
+        while i < no_of_cols:
+            if i == (no_of_cols-1):
+                column_string += "\"" + column_list[i] + "\""
+            else: 
+                column_string += "\"" + column_list[i] + "\", "
+            i+=1
+        #if column_list:
+        df = extract_data(select_string, column_string, from_string, filter_string)
 
 # Insert containers separated into tabs:
 tab1, tab2, tab3 = st.tabs(["Dataset", "Collateral", "Details"])
