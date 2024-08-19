@@ -40,7 +40,7 @@ print (df)
 
 
 # Three columns with different widths
-col1, col2  = st.columns([1,2])
+col1, col2  = st.columns([2,2])
 # col1 is wider
 
 # Using 'with' notation:
